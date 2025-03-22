@@ -1,0 +1,26 @@
+add anggota koperasi: 
+Method: POST
+http://localhost:5000/api/add-anggota
+
+contoh: 
+{
+    "username": "Saputra001",
+    "password": "12345",
+    "tanggal_masuk": "2024-12-10",
+    "alamat": "Baleenda - Dayeuh kolot, Kab bandung jawa barat",
+    "nama_lengkap":"Saputra Wirawan"
+}
+
+
+
+login: 
+Method: POST
+http://localhost:5000/api/auth/login
+
+pastikan username sudah terdaftar di database
+contoh: 
+{
+    "username":"dedeanjar",
+    "password":"12345"
+}
+

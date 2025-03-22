@@ -1,0 +1,82 @@
+
+
+update kolom
+ALTER TABLE investasi 
+MODIFY COLUMN id_investasi VARCHAR(20) NOT NULL;
+
+update tambah kolom dengan enum
+ALTER TABLE transaksi_tabungan
+ADD COLUMN jenis_transaksi ENUM('SIMPAN', 'AMBIL') NOT NULL AFTER jumlah_menabung;
+
+update tambah field baru:
+ALTER TABLE users
+ADD alamat text(255)
+
+update isi field: 
+UPDATE users 
+SET id_anggota = 'ANG-2412-01' 
+WHERE id_anggota = 'ANG-2412-00';
+
+
+
+menambah field alamat pada table users
+
+buat tabel dengan ada foreign key
+CREATE TABLE investasi (
+    total_investasi DECIMAL(10,2) NOT NULL,
+    id_anggota VARCHAR(255) NOT NULL,
+    CONSTRAINT fk_id_anggota FOREIGN KEY (id_anggota) REFERENCES users(id_anggota)
+);
+
+
+rename nama field table 
+ALTER TABLE transaksi_tabungan CHANGE jumlah_setoran jumlah_menabung DECIMAL(10,2); harus disebutkan tipe datanya
+
+
+delete tabel
+DROP TABLE nama_tabel;
+
+rename nama table: 
+RENAME TABLE nama_tabel_lama TO nama_tabel_baru;
+
+
+tambahkan unique field
+ALTER TABLE nama_tabel ADD CONSTRAINT nama_constraint UNIQUE (nama_field);
+ALTER TABLE investasi ADD CONSTRAINT unik_id_anggota UNIQUE (id_anggota);
+
+delete field
+ALTER TABLE nama_tabel DROP COLUMN nama_kolom;
+ALTER TABLE investasi DROP COLUMN total_investasi;
+
+DELETE FROM users WHERE id_anggota = 'ANG-2412-00';
+
+menampilkan investasi total
+select users.id_anggota, users.nama_lengkap, investasi.total_investasi from users INNER JOIN investasi ON users.id_anggota = investasi.id_anggota
+
+menampilkan semua saldo 
+select users.id_anggota, users.nama_lengkap, saldo.total_saldo from users INNER JOIN saldo ON users.id_anggota = saldo.id_anggota
+
+menghilangkan foreign key
+ALTER TABLE investasi
+DROP FOREIGN KEY fk_id_anggota;
+
+=========================  0000 =======================================
+untuk mengubah / delete foreign key di table lain: 
+ALTER TABLE tabungan DROP FOREIGN KEY fk_id_tabungan;
+
+dan mengganti dengan foreign key cascade: 
+ALTER TABLE tabungan
+ADD CONSTRAINT fk_id_tabungan FOREIGN KEY (id_anggota) REFERENCES users (id_anggota) ON DELETE CASCADE;
+=========================  0000 =======================================
+ALTER TABLE users MODIFY id_anggota VARCHAR(255) NOT NULL PRIMARY KEY;
+ALTER TABLE tabungan DROP FOREIGN KEY fk_id_tabungan;
+ALTER TABLE saldo DROP FOREIGN KEY fk_saldo_id_anggota;
+ALTER TABLE transaksi_topup DROP FOREIGN KEY transaksi_topup_ibfk_1;
+
+
+ALTER TABLE transaksi_topup
+ADD COLUMN jenis_transaksi ENUM('TOPUP', 'BELI') NOT NULL AFTER amount;
+
+SERVICES KODE
+LISTRIKPLN50
+PULSA-SIMP-100
